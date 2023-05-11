@@ -370,28 +370,44 @@ from keras.optimizers import Adam
 data = image
 from sklearn.model_selection import train_test_split
 
+# 将数据和标签随机划分为训练集和测试集，测试数据占比40%
+# stratify分层抽样，保证训练和测试各样本的比例相同
 X_train, X_test, Y_train, Y_test = train_test_split(data, label, test_size=0.4, random_state=42,
                                                     stratify=label)  # divide train,test,validation
+
 
 def build_CNN():  # CNN model
     model = Sequential()
 
+    # 添加卷积层
     model.add(Convolution2D(
+        # 输入形状
         batch_input_shape=(None, 20, 20, 1),
+        # 卷积核的数目为16个
         filters=16,
+        # 卷积核大小
         kernel_size=5,
+        # 步长
         strides=1,
+        # 边界进行零填充，输出与输入形状相同
         padding='same',
     ))
 
+    # 添加ReLU变体激活函数，负半部分斜率设置为0.3
     model.add(LeakyReLU(alpha=0.3))
+
+    # 添加池化层
     model.add(MaxPooling2D(
+        # 池化核大小
         pool_size=2,
         strides=1,
         padding='same',
     ))
+
+    # 总体期望不变，随机丢弃40%神经元
     model.add(Dropout(0.4))
 
+    # 卷积核数目8，核函数大小8，步长2
     model.add(Convolution2D(8, 8, strides=2, padding='same'))
     model.add(LeakyReLU(alpha=0.3))
     model.add(MaxPooling2D(2, 2, 'same'))
@@ -402,34 +418,45 @@ def build_CNN():  # CNN model
     model.add(MaxPooling2D(2, 2, 'same'))
     model.add(Dropout(0.4))
 
+    # 将多维展开为1维
     model.add(Flatten())
+    # 添加全连接层，输出200个元素
     model.add(Dense(200))
     model.add(LeakyReLU(alpha=0.3))
     model.add(Dense(4))
+    # 使用softmax函数将输出转化为0到1之间，总和为1
     model.add(Activation('softmax'))
-    adam = Adam(lr=1e-3)
+    # 设置学习率为0.001，使用Adam优化器
+    adam = Adam(lr=0.002)
     model.compile(optimizer=adam,
-                  loss='categorical_crossentropy',
-                  metrics=['accuracy'])
+                  loss='categorical_crossentropy',  # 定义损失函数为交叉熵损失函数
+                  metrics=['accuracy'])  # 评估模型为准确率
     return model
 
 
+# 迭代100次
 epochs = 100
 batch_size = 16
 test_acc = []
 x_train = np.array(X_train).reshape(-1, 20, 20, 1).astype('float32')
 x_test = np.array(X_test).reshape(-1, 20, 20, 1).astype('float32')
+# 根据标签进行独热编码
 y_train = np_utils.to_categorical(Y_train, num_classes=4)
 y_test = np_utils.to_categorical(Y_test, num_classes=4)
+# 将训练数据集和测试数据集进行特征标椎化
 x_train_mean = np.mean(x_train, axis=0)
 x_train -= x_train_mean
 x_test -= x_train_mean
 model = build_CNN()
+# 输出模型信息
 model.summary()
 acc = []
 
 for i in range(10):  # diagnosis
+    # validation_split使用一半的训练数据作为验证数据
+    # epochs训练轮数 batch_size每次训练使用的样本数量 verbose每轮迭代后输出一行
     history = model.fit(x_train, y_train, validation_split=0.5, epochs=epochs, batch_size=batch_size, verbose=1)
+    # 评估损失和准确度
     loss, accuracy = model.evaluate(x_test, y_test)
     acc.append([accuracy])
     print(accuracy * 100)
