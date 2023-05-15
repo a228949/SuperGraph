@@ -1,17 +1,18 @@
 import numpy as np
-import scipy.io as sio
-import math
+# import scipy.io as sio
+# import math
 import time
-from scipy.fftpack import fft, fftshift, ifft
-from scipy.fftpack import fftfreq
-import matplotlib.pyplot as plt
-import scipy.signal as signal
-import scipy
-from matplotlib import cm
+
+# from scipy.fftpack import fft, fftshift, ifft
+# from scipy.fftpack import fftfreq
+# import matplotlib.pyplot as plt
+# import scipy.signal as signal
+# import scipy
+# from matplotlib import cm
 
 start = time.time()
 dataset = []
-k = 4
+k = 8
 
 
 def loadDatadet(infile, k):
@@ -41,17 +42,21 @@ G1 = 19
 # ----------------------crack 0-------------------
 mj = 0
 temp00 = []
-infile = r'Gearbox\Dataset_1\LW-00\1500-0.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-00\1500-0.txt'
+# 有效数据120000行9列
 temp1 = loadDatadet(infile, k)
+# 选取80001到84001的4000行数据
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
+# 获取第4列数据
 for i in range(0, len(temp1)):
     temp00.append(float(temp1[i][k]))
 temp00 = normalization(temp00)
+# 把数据分成10份，每份400个
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp00[0 + j:400 + j])
 
 temp01 = []
-infile = r'Gearbox\Dataset_1\LW-00\1500-2.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-00\1500-2.txt'
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
 for i in range(0, len(temp1)):
@@ -60,7 +65,7 @@ temp01 = normalization(temp01)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp01[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-00\1500-4.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-00\1500-4.txt'
 temp02 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -70,7 +75,7 @@ temp02 = normalization(temp02)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp02[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-00\1500-6.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-00\1500-6.txt'
 temp03 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -80,7 +85,7 @@ temp03 = normalization(temp03)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp03[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-00\1500-8.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-00\1500-8.txt'
 temp04 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -90,7 +95,7 @@ temp04 = normalization(temp04)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp04[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-00\1500-10.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-00\1500-10.txt'
 temp05 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -103,7 +108,7 @@ for j in range(0, 400 * sample_num, 400):
 # #----------------------crack 5-------------------
 mj = 1
 temp10 = []
-infile = r'Gearbox\Dataset_1\LW-01\1500-0.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-01\1500-0.txt'
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
 for i in range(0, len(temp1)):
@@ -113,7 +118,7 @@ for j in range(0, 400 * sample_num, 400):
     dataset.append(temp10[0 + j:400 + j])
 
 temp11 = []
-infile = r'Gearbox\Dataset_1\LW-01\1500-2.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-01\1500-2.txt'
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
 for i in range(0, len(temp1)):
@@ -122,7 +127,7 @@ temp11 = normalization(temp11)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp11[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-01\1500-4.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-01\1500-4.txt'
 temp12 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -132,7 +137,7 @@ temp12 = normalization(temp12)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp12[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-01\1500-6.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-01\1500-6.txt'
 temp13 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -142,7 +147,7 @@ temp13 = normalization(temp13)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp13[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-01\1500-8.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-01\1500-8.txt'
 temp14 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -152,7 +157,7 @@ temp14 = normalization(temp14)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp14[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-01\1500-10.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-01\1500-10.txt'
 temp15 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -165,7 +170,7 @@ for j in range(0, 400 * sample_num, 400):
 # #----------------------crack 10-------------------
 mj = 2
 temp20 = []
-infile = r'Gearbox\Dataset_1\LW-02\1500-0.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-02\1500-0.txt'
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
 for i in range(0, len(temp1)):
@@ -175,7 +180,7 @@ for j in range(0, 400 * sample_num, 400):
     dataset.append(temp20[0 + j:400 + j])
 
 temp21 = []
-infile = r'Gearbox\Dataset_1\LW-02\1500-2.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-02\1500-2.txt'
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
 for i in range(0, len(temp1)):
@@ -184,7 +189,7 @@ temp21 = normalization(temp21)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp21[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-02\1500-4.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-02\1500-4.txt'
 temp22 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -194,7 +199,7 @@ temp22 = normalization(temp22)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp22[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-02\1500-6.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-02\1500-6.txt'
 temp23 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -204,7 +209,7 @@ temp23 = normalization(temp23)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp23[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-02\1500-8.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-02\1500-8.txt'
 temp24 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -214,7 +219,7 @@ temp24 = normalization(temp24)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp24[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-02\1500-10.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-02\1500-10.txt'
 temp25 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -227,7 +232,7 @@ for j in range(0, 400 * sample_num, 400):
 # #----------------------crack 15-------------------
 mj = 3
 temp30 = []
-infile = r'Gearbox\Dataset_1\LW-03\1500-0.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-03\1500-0.txt'
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
 for i in range(0, len(temp1)):
@@ -237,7 +242,7 @@ for j in range(0, 400 * sample_num, 400):
     dataset.append(temp30[0 + j:400 + j])
 
 temp31 = []
-infile = r'Gearbox\Dataset_1\LW-03\1500-2.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-03\1500-2.txt'
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
 for i in range(0, len(temp1)):
@@ -246,7 +251,7 @@ temp31 = normalization(temp31)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp31[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-03\1500-4.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-03\1500-4.txt'
 temp32 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -256,7 +261,7 @@ temp32 = normalization(temp32)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp32[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-03\1500-6.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-03\1500-6.txt'
 temp33 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -266,7 +271,7 @@ temp33 = normalization(temp33)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp33[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-03\1500-8.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-03\1500-8.txt'
 temp34 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -276,7 +281,7 @@ temp34 = normalization(temp34)
 for j in range(0, 400 * sample_num, 400):
     dataset.append(temp34[0 + j:400 + j])
 
-infile = r'Gearbox\Dataset_1\LW-03\1500-10.txt'
+infile = r'E:\pythonCode\SuperGraph\data\Gearbox\LW-03\1500-10.txt'
 temp35 = []
 temp1 = loadDatadet(infile, k)
 temp1 = temp1[4001 + sample_num * 400 * G1:4002 + sample_num * 400 * (G1 + 1)]
@@ -300,8 +305,8 @@ for i in range(60):
 for i in range(60):
     y.append(3)
 
-import scipy.io as sio
-import scipy.signal as signal
+# import scipy.io as sio
+# import scipy.signal as signal
 import operator as opt
 
 
@@ -315,6 +320,7 @@ def diedai(a):
     m = -1
     for i in arr:
         m += 1
+        # 前30%用于训练样本
         if m < 0.3 * len(arr):
             Train.append(a[i])
             Train_label.append(y[i])
@@ -323,19 +329,26 @@ def diedai(a):
             Test_label.append(y[i])
     return Train, Train_label, Test, Test_label
 
-
+# 按照K个距离最近获取分类结果
 def kNN(dataset, labels, testdata, k):  # KNN network
     distSquareMat = []
+    # 获取训练样本与测试数据之间的欧式距离
     for i in range(len(dataset)):
         distSquareMat.append(np.sqrt(sum(np.square(dataset[i] - testdata))))
     distSquareMat = np.array(distSquareMat)
+    # argsort从小到大排序并返回下标
     sortedIndices = distSquareMat.argsort()
+    # 获取前k个最短距离的下标
     indices = sortedIndices[:k]
     labelCount = {}
     for i in indices:
         label = labels[i]
+        # 统计标签数量，get字典不存在返回0
         labelCount[label] = labelCount.get(label, 0) + 1
 
+    # labelCount.items 将字典元素转化为元组
+    # key按照元组第二个元素排序 reverse=True 从大到小
+    # 最终sortedCount是一个列表
     sortedCount = sorted(labelCount.items(), key=opt.itemgetter(1), reverse=True)
     return sortedCount[0][0]
 
@@ -349,8 +362,9 @@ for epoch in range(1, 11):
     Test = np.array(Test)
     result = []
     for i in range(len(Test)):
-        result.append(kNN(Train, Train_label, Test[i], 3))
+        result.append(kNN(Train, Train_label, Test[i], 4))
     m = 0
+    # 获取分类结果与测试数据之间的准确度
     for i in range(len(result)):
         if result[i] == Test_label[i]:
             m += 1

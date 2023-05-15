@@ -1,17 +1,19 @@
-import psutil
-import os
-
-import numpy as np
+# import psutil
+# import os
+#
+# import numpy as np
 import scipy.io as sio
-import math
-import time
-from scipy.fftpack import fft, fftshift, ifft
-from scipy.fftpack import fftfreq
-import matplotlib.pyplot as plt
+# import math
+# import time
+# from scipy.fftpack import fft, fftshift, ifft
+# from scipy.fftpack import fftfreq
+# import matplotlib.pyplot as plt
 import numpy as np
-import scipy.signal as signal
-import scipy
-from matplotlib import cm
+
+
+# import scipy.signal as signal
+# import scipy
+# from matplotlib import cm
 
 
 def read_mat(path, key):
@@ -22,6 +24,7 @@ def read_mat(path, key):
 def splitlist(list1):
     alist = []
     a = 0
+    # 把300行一列的标签数据转化为1行300列列表
     for sublist in list1:
         try:
             for i in sublist:
@@ -29,6 +32,7 @@ def splitlist(list1):
         except TypeError:
             alist.append(sublist)
     for i in alist:
+        # 如果i是列表，这里i是单个数据，并非列表
         if type(i) == type([]):
             a = +1
             break
@@ -48,18 +52,21 @@ def arr_size(arr, size):
 
 # read data
 # ---------------------------0 load--------------------------------
-path = 'KAT/KATData0.mat'
+path = 'E:\pythonCode\SuperGraph\data\KAT\KATData0.mat'
 key = 'data'
 data01 = read_mat(path, key)
+# 读取数据300,2560
 data01 = data01.tolist()
+# 每个标签下获取10行数据
 datas01 = data01[0:10] + data01[100:110] + data01[200:210]
 key = 'label'
 y01 = read_mat(path, key)
 y01 = splitlist(y01)
+# 获取对应数据的标签
 ys01 = y01[0:10] + y01[100:110] + y01[200:210]
 
 # ---------------------------1 load--------------------------------
-path = 'KAT/KATData1.mat'
+path = 'E:\pythonCode\SuperGraph\data\KAT\KATData1.mat'
 key = 'data'
 data02 = read_mat(path, key)
 data02 = data02.tolist()
@@ -70,7 +77,7 @@ y02 = splitlist(y02)
 ys02 = y02[0:10] + y02[100:110] + y02[200:210]
 
 # ---------------------------2 load--------------------------------
-path = 'KAT/KATData2.mat'
+path = 'E:\pythonCode\SuperGraph\data\KAT\KATData2.mat'
 key = 'data'
 data03 = read_mat(path, key)
 data03 = data03.tolist()
@@ -81,7 +88,7 @@ y03 = splitlist(y03)
 ys03 = y03[0:10] + y03[100:110] + y03[200:210]
 
 # ---------------------------3 load--------------------------------
-path = 'KAT/KATData3.mat'
+path = 'E:\pythonCode\SuperGraph\data\KAT\KATData3.mat'
 key = 'data'
 data04 = read_mat(path, key)
 data04 = data04.tolist()
@@ -91,6 +98,7 @@ y04 = read_mat(path, key)
 y04 = splitlist(y04)
 ys04 = y04[0:10] + y04[100:110] + y04[200:210]
 
+# 将各个数据集获取到的数据添加到一起，共120行，2560列
 image = []
 for i in datas01:
     image.append(i)
@@ -101,6 +109,7 @@ for i in datas03:
 for i in datas04:
     image.append(i)
 dataa = []
+# 获取数据的前2500列
 for i in image:
     dataa.append(i[0:2500])
 image = dataa
@@ -116,23 +125,25 @@ for x in ys03:
     y.append(x)
 for x in ys04:
     y.append(x)
+
+# 标签由1,2,3改为0,1,2
 y = [x - 1 for x in y]
 label = y
 
-import numpy as np
 from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Convolution2D, MaxPooling2D, Flatten, LeakyReLU, Dropout, GlobalMaxPooling2D
 from keras.optimizers import Adam
-import matplotlib.pyplot as plt
-import os
-import time
-import pandas as pd
-from PIL import Image
-import tensorflow as tf
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-from skimage import util
+
+# import matplotlib.pyplot as plt
+# import os
+# import time
+# import pandas as pd
+# from PIL import Image
+# import tensorflow as tf
+# from sklearn.model_selection import train_test_split
+# import matplotlib.pyplot as plt
+# from skimage import util
 
 data = image
 from sklearn.model_selection import train_test_split
@@ -150,7 +161,6 @@ def build_CNN():  # CNN model
         kernel_size=5,
         strides=1,
         padding='same',
-
     ))
 
     model.add(LeakyReLU(alpha=0.3))
@@ -189,9 +199,11 @@ batch_size = 16
 test_acc = []
 x_train = np.array(X_train).reshape(-1, 50, 50, 1).astype('float32')
 x_test = np.array(X_test).reshape(-1, 50, 50, 1).astype('float32')
+# 独热编码
 y_train = np_utils.to_categorical(Y_train, num_classes=3)
 y_test = np_utils.to_categorical(Y_test, num_classes=3)
 
+# 特征标椎化
 x_train_mean = np.mean(x_train, axis=0)
 x_train -= x_train_mean
 x_test -= x_train_mean

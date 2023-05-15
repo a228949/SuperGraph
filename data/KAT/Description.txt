@@ -11,3 +11,17 @@ The “KATData3.mat” means that the vibration data were collected when the rot
 
 4. Each file corresponds to the data under one working condition, and contains 300 samples, a total of 3 types of fault data,  
 including health, inner ring fault, outer ring fault, corresponding to labels 0, 1, 2. 100 samples for each type. 
+
+1. 振动采样频率：64 kHz
+
+2. 数据文件采用Matlab格式。每个文件包含样本和样本标签：
+data - 收集的振动样本
+label - 相应样本的标签
+
+3. “KATData0.mat”表示振动数据是在旋转速度为1500转/分钟，负载扭矩为0.7牛米，径向力为1000牛的条件下收集的。
+“KATData1.mat”表示振动数据是在旋转速度为900转/分钟，负载扭矩为0.7牛米，径向力为1000牛的条件下收集的。
+“KATData2.mat”表示振动数据是在旋转速度为1500转/分钟，负载扭矩为0.1牛米，径向力为1000牛的条件下收集的。
+“KATData3.mat”表示振动数据是在旋转速度为1500转/分钟，负载扭矩为0.7牛米，径向力为400牛的条件下收集的。
+
+4. 每个文件对应于一种工作条件下的数据，包含300个样本，共3种故障数据，
+包括正常、内圈故障、外圈故障，分别对应标签0、1、2。每种类型有100个样本。

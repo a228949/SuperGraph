@@ -427,7 +427,7 @@ def build_CNN():  # CNN model
     # 使用softmax函数将输出转化为0到1之间，总和为1
     model.add(Activation('softmax'))
     # 设置学习率为0.001，使用Adam优化器
-    adam = Adam(lr=0.002)
+    adam = Adam(lr=1e-3)
     model.compile(optimizer=adam,
                   loss='categorical_crossentropy',  # 定义损失函数为交叉熵损失函数
                   metrics=['accuracy'])  # 评估模型为准确率
